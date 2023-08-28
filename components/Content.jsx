@@ -13,9 +13,13 @@ function Content() {
         {isDropdownOpen && <DropDown />}
       </div>
 
-      <div className={`${isDropdownOpen ? "opaque-bg" : ""}`}>
-        <Slider />
-        <Underslider />
+      <div
+        className={`overlay-container ${isDropdownOpen ? "dropdown-open" : ""}`}
+      >
+        <div className="content-container">
+          <Slider />
+          <Underslider />
+        </div>
       </div>
     </div>
   );

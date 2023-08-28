@@ -2,10 +2,8 @@ import React from "react";
 import { useDropdown } from "./DropdownContext";
 
 function Underslider() {
-  const { isDropdownOpen } = useDropdown();
-
   return (
-    <div className="mt-[450px] flex justify-evenly space-x-[-100px] ">
+    <div className="mt-[360px] flex justify-evenly space-x-[-100px] ">
       <div className="flex flex-col items-center text-center h-[200px] w-[200px] ">
         <img
           src="https://lcdn.altex.ro/render/static/altex/images/services/transport_pana_la_usa.svg"
