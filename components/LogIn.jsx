@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/router";
 
 export default function LoginPage({ setLoggedIn }) {
   const [email, setEmail] = useState("");
@@ -17,6 +18,12 @@ export default function LoginPage({ setLoggedIn }) {
       .catch((error) => {
         alert(error);
       });
+  };
+
+  const router = useRouter();
+
+  const handleNavigation = () => {
+    router.push("/register");
   };
 
   return (
@@ -48,7 +55,10 @@ export default function LoginPage({ setLoggedIn }) {
         >
           Autentificare
         </button>
-        <button className="text-red-700 underline text-[14px] pt-5">
+        <button
+          onClick={handleNavigation}
+          className="text-red-700 underline text-[14px] pt-5"
+        >
           Inregistrare
         </button>
       </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BiSearchAlt, BiCart, BiUserCircle } from "react-icons/bi";
 import LogIn from "./LogIn";
+import { useRouter } from "next/router";
 
 function Top() {
   const [showLogIn, setShowLogIn] = useState(false);
@@ -8,6 +9,12 @@ function Top() {
 
   const handleContClick = () => {
     setShowLogIn(!showLogIn);
+  };
+
+  const router = useRouter();
+
+  const backToIndex = () => {
+    router.push("/");
   };
 
   useEffect(() => {
@@ -32,7 +39,8 @@ function Top() {
         <img
           src="https://seeklogo.com/images/A/altex-logo-35BF8452EC-seeklogo.com.png"
           alt="LogoAltex"
-          className="pr-10 h-[40px] w-[200px]"
+          className="pr-10 h-[40px] w-[200px] cursor-pointer"
+          onClick={backToIndex}
         />
         <div className="flex pl-[50px] border border-gray-300 border-1 rounded-xl">
           <input
@@ -66,7 +74,7 @@ function Top() {
       {showLogIn && (
         <div
           ref={popoutRef}
-          className="fixed ml-[1100px] mt-[50px] flex justify-center items-center z-10 bg-gray-800 bg-opacity-50 rounded-xl"
+          className="fixed ml-[1100px] mt-[51px] flex justify-center items-center z-10 bg-gray-800 bg-opacity-50 rounded-xl"
         >
           <div className="bg-white p-6 rounded-lg shadow-md">
             <LogIn />

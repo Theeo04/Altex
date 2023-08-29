@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
-import Underslider from "./Underslider";
 
 export default () => {
   const [currentSlide, setCurrentSlide] = useState(0);
