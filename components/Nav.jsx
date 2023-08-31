@@ -13,9 +13,7 @@ function Nav() {
           Produse
         </button>
         <button className="piece">Promotii</button>
-        <button className="piece" onClick={toggleDropdown}>
-          Finantare
-        </button>
+        <button className="piece">Finantare</button>
         <button className="piece">Suport Clienti</button>
         <button className="piece">Magazine</button>
         <button className="piece">Altex Travel</button>

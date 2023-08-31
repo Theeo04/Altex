@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase";
-import Header from "../../components/Header";
-import Nav from "../../components/Nav";
 import Top from "../../components/Top";
 import LoginPage from "../../components/LogIn";
 import { GiDiamonds } from "react-icons/gi";
+import { useRouter } from "next/router";
 
 export default function RegisterPage({ setLoggedIn }) {
   const [email, setEmail] = useState("");
@@ -24,10 +23,12 @@ export default function RegisterPage({ setLoggedIn }) {
   };
 
   const handleButtonClick = () => {
-    if (!isChecked) {
-      alert("Please check the checkbox before proceeding.");
+    if (!isChecked1) {
+      alert("Please check both checkboxes before proceeding.");
       return;
     }
+    verifyPass();
+    signUp();
   };
 
   const verifyPass = () => {
@@ -37,27 +38,30 @@ export default function RegisterPage({ setLoggedIn }) {
     }
   };
 
-  const signUp = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
-        setLoggedIn(true);
+  const router = useRouter();
 
-        // Update the user profile firebase --version 12.4.8
-        return updateProfile(auth.currentUser, {
-          displayName: username,
-          photoURL: avatars[randomNum],
-          phoneNumber: numarTel,
-        });
-      })
-      .then(() => {
-        console.log("Profile updated successfully");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        alert(errorCode);
+  const signUp = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log(user);
+      setLoggedIn(true);
+
+      await updateProfile(user, {
+        displayName: username,
+        phoneNumber: numarTel,
       });
+      console.log("Profile updated successfully");
+
+      router.push("/");
+    } catch (error) {
+      const errorCode = error.code;
+      router.push("/");
+    }
   };
 
   return (
@@ -166,8 +170,6 @@ export default function RegisterPage({ setLoggedIn }) {
             <button
               className="mt-8 text-[17px] h-[45px] w-[654px] bg-yellow-400 rounded-bl-xl rounded-tr-xl"
               onClick={() => {
-                verifyPass();
-                signUp();
                 handleButtonClick();
               }}
             >

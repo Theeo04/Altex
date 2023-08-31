@@ -16,7 +16,7 @@ export default function LoginPage({ setLoggedIn }) {
         setLoggedIn(true);
       })
       .catch((error) => {
-        alert(error);
+        // alert(error);
       });
   };
 

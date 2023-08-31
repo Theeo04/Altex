@@ -18,6 +18,10 @@
   background-color: rgba(0, 0, 0, 0.1); /* Culoare de fundal opacă */
 }
 
+.darker:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .produse {
   position: absolute;
   left: 160px;
@@ -130,6 +134,8 @@
 .slide {
   width: 900px;
   height: 360px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 .overlay-container {
