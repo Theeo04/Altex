@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
-export default () => {
+function Slider() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider({
@@ -85,7 +85,7 @@ export default () => {
       )}
     </div>
   );
-};
+}
 
 function Arrow(props) {
   const disabeld = props.disabled ? " arrow--disabled" : "";
@@ -107,3 +107,5 @@ function Arrow(props) {
     </svg>
   );
 }
+
+export default Slider;

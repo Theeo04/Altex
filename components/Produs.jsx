@@ -28,6 +28,7 @@ function Produs({ numeProdus, pret, image, rating, noRatings }) {
       <div className="flex">
         {[...Array(5)].map((_, i) => (
           <svg
+            key={i}
             className={`w-4 h-4 ${
               i < rating ? "text-yellow-300" : "text-gray-500"
             }  `}
