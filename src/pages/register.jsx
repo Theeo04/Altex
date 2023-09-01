@@ -31,6 +31,10 @@ export default function RegisterPage({ setLoggedIn }) {
     signUp();
   };
 
+  const deleteLocal = () => {
+    localStorage.removeItem("cart");
+  };
+
   const verifyPass = () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match");
@@ -56,6 +60,9 @@ export default function RegisterPage({ setLoggedIn }) {
         phoneNumber: numarTel,
       });
       console.log("Profile updated successfully");
+
+      // Call deleteLocal() after successful sign-in
+      deleteLocal();
 
       router.push("/");
     } catch (error) {

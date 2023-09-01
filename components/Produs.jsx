@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { GiDiamonds } from "react-icons/gi";
+import CartContext from "./CartContext";
 
 function Produs({ numeProdus, pret, image, rating, noRatings }) {
+  const { addItemToCart } = useContext(CartContext);
+
+  const addToCartHandler = () => {
+    addItemToCart({
+      name: numeProdus,
+      price: pret,
+      image: image,
+      // Add other properties as needed
+    });
+  };
+
   function truncateText(sentence, maxLength) {
     const words = sentence.split(" ");
 
@@ -44,7 +56,12 @@ function Produs({ numeProdus, pret, image, rating, noRatings }) {
       </div>
       <p className="text-[22px] font-[500] text-red-600 pb-3">{pret} lei</p>
       <div className="w-[190px] h-[30px] flex items-center justify-center bck rounded-bl-xl rounded-tr-xl darker">
-        <button className="text-white w-[180px] h-[29px]">Adauga in cos</button>
+        <button
+          className="text-white w-[180px] h-[29px]"
+          onClick={addToCartHandler}
+        >
+          Adauga in cos
+        </button>
       </div>
     </div>
   );

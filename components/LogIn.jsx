@@ -7,16 +7,24 @@ export default function LoginPage({ setLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const deleteLocal = () => {
+    localStorage.removeItem("cart");
+  };
+
   const signIn = () => {
-    //Signed in
+    // Signed in
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
         setLoggedIn(true);
+
+        // Call deleteLocal() after successful sign-in
+        deleteLocal();
       })
       .catch((error) => {
-        // alert(error);
+        // Handle sign-in error
+        alert(error);
       });
   };
 

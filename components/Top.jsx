@@ -7,11 +7,16 @@ import { getAuth, signOut } from "firebase/auth";
 function Top() {
   const [showLogIn, setShowLogIn] = useState(false);
   const [showSignOut, setShowSignOut] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const popoutRef = useRef(null); // Ref to the pop-out container
 
   const handleLogInClick = () => {
     setShowLogIn(!showLogIn);
     setShowSignOut(false); // Hide the signOut pop-out
+  };
+
+  const deleteLocal = () => {
+    localStorage.removeItem("cart");
   };
 
   const handleSignOutClick = () => {
@@ -44,12 +49,18 @@ function Top() {
       .catch((error) => {
         console.error("Error signing out:", error);
       });
+
+    deleteLocal();
   };
 
   const router = useRouter();
 
   const backToIndex = () => {
     router.push("/");
+  };
+
+  const goToCart = () => {
+    router.push("/cartPage");
   };
 
   useEffect(() => {
@@ -90,7 +101,9 @@ function Top() {
       <div className="lg:mr-[150px] lg:flex lg:justify-between flex justify-between sm:mt-[-120px] lg:mt-0 ml-[30px] sm:mr-7 ">
         <div className="flex pt-0 pr-[30px] lg:pt-3 pr-[300px]">
           <BiCart className="text-[40px] " />
-          <p className="text-[15px] font-semibold pt-2">Cosul Meu</p>
+          <p className="text-[15px] font-semibold pt-2" onClick={goToCart}>
+            Cosul Meu
+          </p>
         </div>
         <div className="flex">
           <BiUserCircle
@@ -114,7 +127,7 @@ function Top() {
               className="absolute ml-[1100px] mt-[51px] flex justify-center items-center z-10 bg-gray-800 bg-opacity-50 rounded-xl"
             >
               <div className="bg-white p-6 rounded-lg shadow-md">
-                <LogIn />
+                <LogIn setLoggedIn={setLoggedIn} />
               </div>
             </div>
           )
@@ -125,10 +138,10 @@ function Top() {
             >
               <div className="bg-white p-6 rounded-lg shadow-md w-[300px] h-[100px] flex justify-center text-[18px] border">
                 <button
-                  className="bck text-white w-[100px] h-[50px] rounded-bl-xl rounded-tr-xl"
+                  className="bck text-white w-[140px] h-[50px] rounded-bl-xl rounded-tr-xl"
                   onClick={handleSignOut}
                 >
-                  SignOut
+                  Iesi din cont
                 </button>
               </div>
             </div>
