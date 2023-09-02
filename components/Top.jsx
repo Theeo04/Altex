@@ -3,12 +3,29 @@ import { BiSearchAlt, BiCart, BiUserCircle } from "react-icons/bi";
 import LogIn from "./LogIn";
 import { useRouter } from "next/router";
 import { getAuth, signOut } from "firebase/auth";
+import CartPopup from "./CartPopup";
 
 function Top() {
   const [showLogIn, setShowLogIn] = useState(false);
   const [showSignOut, setShowSignOut] = useState(false);
+  const [showCartPopup, setShowCartPopup] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+
   const popoutRef = useRef(null); // Ref to the pop-out container
+
+  useEffect(() => {
+    const cartItemString = localStorage.getItem("cart");
+
+    if (cartItemString) {
+      const parsedCartItems = JSON.parse(cartItemString);
+      setCartItems(parsedCartItems.cartItems); // Accessing the array inside the object
+    }
+  }, []); // Empty dependency array ensures this effect runs only once on mount
+
+  if (!Array.isArray(cartItems)) {
+    return <p>Loading...</p>; // or handle loading state differently
+  }
 
   const handleLogInClick = () => {
     setShowLogIn(!showLogIn);
@@ -99,11 +116,18 @@ function Top() {
         </div>
       </div>
       <div className="lg:mr-[150px] lg:flex lg:justify-between flex justify-between sm:mt-[-120px] lg:mt-0 ml-[30px] sm:mr-7 ">
-        <div className="flex pt-0 pr-[30px] lg:pt-3 pr-[300px]">
-          <BiCart className="text-[40px] " />
-          <p className="text-[15px] font-semibold pt-2" onClick={goToCart}>
-            Cosul Meu
-          </p>
+        <div
+          className="flex pt-0 pr-[30px] lg:pt-3 pr-[300px] cursor-pointer relative"
+          onClick={() => setShowCartPopup(!showCartPopup)} // Toggle Cart popup
+        >
+          <div className="flex">
+            <BiCart className="text-[40px]" />
+            {cartItems.length > 0 && (
+              <div className="cover bg-green-500 w-3 h-3 rounded-full"></div>
+            )}
+          </div>
+
+          <p className="text-[15px] font-semibold pt-2">Cosul Meu</p>
         </div>
         <div className="flex">
           <BiUserCircle
@@ -146,6 +170,16 @@ function Top() {
               </div>
             </div>
           )}
+
+      {showCartPopup && (
+        <div
+          ref={popoutRef}
+          className="absolute ml-[1150px] mt-[51px] flex flex-col justify-center items-center ounded-xl"
+        >
+          <CartPopup />
+          <button onClick={goToCart}>Vezi Cosul</button>
+        </div>
+      )}
     </div>
   );
 }

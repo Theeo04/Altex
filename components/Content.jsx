@@ -4,6 +4,7 @@ import DropDown from "./DropDown";
 import Slider from "./Slider";
 import Underslider from "./Underslider";
 import Produse from "./Produse";
+import SliderProduse from "./SliderProduse";
 
 function Content() {
   const { isDropdownOpen } = useDropdown();
@@ -21,6 +22,7 @@ function Content() {
           <Slider />
           <Underslider />
           <Produse />
+          <SliderProduse />
         </div>
       </div>
     </div>

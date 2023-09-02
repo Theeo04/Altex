@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Top from "../../components/Top";
+import { AiOutlineClose } from "react-icons/ai";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [subtotal, setsubTotal] = useState(0);
   const [total, setTotal] = useState(0);
+  const [transpTax, setranspTax] = useState(0);
 
   const handleDeleteItem = (itemToDelete) => {
     if (itemToDelete.quantity > 0) {
@@ -26,14 +29,10 @@ const Cart = () => {
     }
   };
 
-  function getRandomNumber(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
-  const randomNumber = getRandomNumber(1, 5);
   const currentDate = new Date();
   const futureDate = new Date(currentDate);
-  futureDate.setDate(currentDate.getDate() + randomNumber);
+  futureDate.setDate(currentDate.getDate() + 2);
+  console.log(futureDate);
 
   useEffect(() => {
     const cartItemString = localStorage.getItem("cart");
@@ -51,15 +50,19 @@ const Cart = () => {
   }
 
   useEffect(() => {
-    let total = 0;
-    cartItems.forEach((Item) => {
-      total += Item.price * Item.quantity;
+    let subtotal = 0;
+    cartItems.forEach((item) => {
+      subtotal += item.price * item.quantity;
     });
-    setTotal(total);
+    setsubTotal(subtotal);
+
+    let transpTax = subtotal > 100 ? 0 : 10;
+    setranspTax(transpTax);
+    setTotal(transpTax + subtotal);
   }, [cartItems]);
 
   return (
-    <div>
+    <div className="mb-10">
       <Top />
       <div className="w-full h-[0.5px] bg-black mt-6"></div>
       <div className="xl:pl-[170px] sm:pl-12">
@@ -91,17 +94,60 @@ const Cart = () => {
                     <p className="mt-2 lg:xl:text-[20px]">
                       Total: ${(cartItem.price * cartItem.quantity).toFixed(2)}
                     </p>
-                    <button onClick={() => handleDeleteItem(cartItem)}>
-                      Delete
-                    </button>
+                    <div className="flex bck mt-5 w-[90px] rounded-bl-xl rounded-tr-xl ml-3">
+                      <AiOutlineClose className="pt-2 text-[23px] text-white" />
+                      <button
+                        className="text-[20px] text-white"
+                        onClick={() => handleDeleteItem(cartItem)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               </li>
             ))}
           </ul>
         )}
+        {cartItems.length !== 0 ? (
+          <div className="flex flex-row space-x-[55px] sm:flex-col">
+            {/* Sumar Cos */}
+            <div className="w-[200px] h-[270px] bg-gray-100 w-[800px] rounded-xl border">
+              <h1 className="text-[28px] font-[500] pl-10 pt-2">
+                Sumar comanda
+              </h1>
+              <p className="pl-[50px] pt-5 text-[18px]">
+                Subtotal:
+                <span className="text-red-700 pl-[140px] text-[18px]">
+                  {subtotal} $
+                </span>
+              </p>
+              <p className="pl-[50px] pt-5 text-[20px]">
+                Transport:
+                {transpTax === 0 ? (
+                  <span className="text-red-700 pl-[124px] text-[20px]">
+                    Transport gratuit
+                  </span>
+                ) : (
+                  <span className="text-red-700 pl-[140px] text-[20px]">
+                    {transpTax} $
+                  </span>
+                )}
+              </p>
+              <div className="bg-black h-[0.07px] w-full mt-3"></div>
+              <p className="pl-[50px] pt-5 text-[28px]">
+                Total:
+                <span className="text-red-700 pl-[170px] text-[28px]">
+                  {total} $
+                </span>
+              </p>
+              <button className="float-right bck text-white w-[140px] h-[40px] text-[22px] rounded-bl-xl rounded-tr-xl mr-5">
+                Continua
+              </button>
+            </div>
+          </div>
+        ) : null}
       </div>
-      <div>Total: {total}</div>
     </div>
   );
 };
