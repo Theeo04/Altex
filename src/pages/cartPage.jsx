@@ -4,9 +4,9 @@ import { AiOutlineClose } from "react-icons/ai";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [subtotal, setsubTotal] = useState(0);
+  const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
-  const [transpTax, setranspTax] = useState(0);
+  const [transpTax, setTranspTax] = useState(0);
 
   const handleDeleteItem = (itemToDelete) => {
     if (itemToDelete.quantity > 0) {
@@ -37,27 +37,22 @@ const Cart = () => {
   useEffect(() => {
     const cartItemString = localStorage.getItem("cart");
 
-    const currentDate = new Date();
-
     if (cartItemString) {
       const parsedCartItems = JSON.parse(cartItemString);
-      setCartItems(parsedCartItems.cartItems); // Accessing the array inside the object
+      setCartItems(parsedCartItems.cartItems);
     }
   }, []); // Empty dependency array ensures this effect runs only once on mount
-
-  if (!Array.isArray(cartItems)) {
-    return <p>Loading...</p>; // or handle loading state differently
-  }
 
   useEffect(() => {
     let subtotal = 0;
     cartItems.forEach((item) => {
       subtotal += item.price * item.quantity;
     });
-    setsubTotal(subtotal);
 
     let transpTax = subtotal > 100 ? 0 : 10;
-    setranspTax(transpTax);
+
+    setSubtotal(subtotal);
+    setTranspTax(transpTax);
     setTotal(transpTax + subtotal);
   }, [cartItems]);
 

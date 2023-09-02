@@ -14,6 +14,8 @@ function Top() {
 
   const popoutRef = useRef(null); // Ref to the pop-out container
 
+  const router = useRouter();
+
   useEffect(() => {
     const cartItemString = localStorage.getItem("cart");
 
@@ -22,63 +24,6 @@ function Top() {
       setCartItems(parsedCartItems.cartItems); // Accessing the array inside the object
     }
   }, []); // Empty dependency array ensures this effect runs only once on mount
-
-  if (!Array.isArray(cartItems)) {
-    return <p>Loading...</p>; // or handle loading state differently
-  }
-
-  const handleLogInClick = () => {
-    setShowLogIn(!showLogIn);
-    setShowSignOut(false); // Hide the signOut pop-out
-  };
-
-  const deleteLocal = () => {
-    localStorage.removeItem("cart");
-  };
-
-  const handleSignOutClick = () => {
-    setShowSignOut(!showSignOut);
-    setShowLogIn(false); // Hide the logIn pop-out
-  };
-
-  const auth = getAuth();
-  const user = auth.currentUser;
-  if (user) {
-    user.providerData.forEach((profile) => {
-      console.log("Sign-in provider: " + profile.providerId);
-      console.log("  Provider-specific UID: " + profile.uid);
-      const email = profile.email;
-    });
-  }
-
-  useEffect(() => {
-    if (user) {
-      setShowLogIn(false); // Hide the login pop-out if user is logged in
-    }
-  }, [user]);
-
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        console.log("Signed out successfully.");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Error signing out:", error);
-      });
-
-    deleteLocal();
-  };
-
-  const router = useRouter();
-
-  const backToIndex = () => {
-    router.push("/");
-  };
-
-  const goToCart = () => {
-    router.push("/cartPage");
-  };
 
   useEffect(() => {
     const handleClick = (event) => {
@@ -96,6 +41,44 @@ function Top() {
       document.removeEventListener("mousedown", handleClick);
     };
   }, []);
+
+  const handleLogInClick = () => {
+    setShowLogIn(!showLogIn);
+    setShowSignOut(false); // Hide the signOut pop-out
+  };
+
+  const deleteLocal = () => {
+    localStorage.removeItem("cart");
+  };
+
+  const handleSignOutClick = () => {
+    setShowSignOut(!showSignOut);
+    setShowLogIn(false); // Hide the logIn pop-out
+  };
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("Signed out successfully.");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
+
+    deleteLocal();
+  };
+
+  const backToIndex = () => {
+    router.push("/");
+  };
+
+  const goToCart = () => {
+    router.push("/cartPage");
+  };
 
   return (
     <div className="flex justify-between mt-4">
