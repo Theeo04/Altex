@@ -18,8 +18,8 @@ function Produse() {
 
   return (
     <div>
-      <h1 className="text-[32px] ml-[100px] mb-6">Top Oferte</h1>
-      <div className="flex space-x-[35px] justify-center">
+      <h1 className="text-[32px] pl-[180px] mb-6 sm:ml-6">Top Oferte</h1>
+      <div className="sm:pl-[50px] sm:space-x-[15px] flex space-x-[35px] justify-center">
         {electronicsSalesProducts.slice(0, 5).map((product) => (
           <Produs
             key={product.id}
@@ -31,7 +31,7 @@ function Produse() {
           />
         ))}
       </div>
-      <div className="flex space-x-[35px] justify-center mt-6">
+      <div className="sm:pl-[50px] sm:space-x-[15px] flex space-x-[35px] justify-center mt-6">
         {electronicsSalesProducts.slice(6, 11).map((product) => (
           <Produs
             key={product.id}

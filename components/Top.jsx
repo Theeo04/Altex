@@ -30,6 +30,7 @@ function Top() {
       if (popoutRef.current && !popoutRef.current.contains(event.target)) {
         setShowLogIn(false);
         setShowSignOut(false);
+        setShowCartPopup(false);
       }
     };
 
@@ -74,10 +75,6 @@ function Top() {
 
   const backToIndex = () => {
     router.push("/");
-  };
-
-  const goToCart = () => {
-    router.push("/cartPage");
   };
 
   return (
@@ -157,10 +154,9 @@ function Top() {
       {showCartPopup && (
         <div
           ref={popoutRef}
-          className="absolute ml-[1150px] mt-[51px] flex flex-col justify-center items-center ounded-xl"
+          className="absolute cover ml-[1050px] mt-[60px] flex flex-col justify-center items-center ounded-xl z-10"
         >
           <CartPopup />
-          <button onClick={goToCart}>Vezi Cosul</button>
         </div>
       )}
     </div>

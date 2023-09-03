@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Top from "../../components/Top";
 import { AiOutlineClose } from "react-icons/ai";
+import { useRouter } from "next/router";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
   const [transpTax, setTranspTax] = useState(0);
+
+  const router = useRouter();
 
   const handleDeleteItem = (itemToDelete) => {
     if (itemToDelete.quantity > 0) {
@@ -56,6 +59,10 @@ const Cart = () => {
     setTotal(transpTax + subtotal);
   }, [cartItems]);
 
+  const goToCheckout = () => {
+    router.push("/checkout");
+  };
+
   return (
     <div className="mb-10">
       <Top />
@@ -81,21 +88,21 @@ const Cart = () => {
                       {cartItem.name}
                     </h3>
                     <p className="mt-2 lg:xl:text-[20px]">
-                      Price: ${cartItem.price.toFixed(2)} (per item)
+                      Pret: ${cartItem.price.toFixed(2)} (pe unitate)
                     </p>
                     <p className="mt-2 lg:xl:text-[20px]">
-                      Quantity: {cartItem.quantity} (Units)
+                      Cantitate: {cartItem.quantity} (Units)
                     </p>
                     <p className="mt-2 lg:xl:text-[20px]">
                       Total: ${(cartItem.price * cartItem.quantity).toFixed(2)}
                     </p>
-                    <div className="flex bck mt-5 w-[90px] rounded-bl-xl rounded-tr-xl ml-3">
+                    <div className="flex bck mt-5 w-[90px] rounded-bl-xl rounded-tr-xl ml-3 hover:opacity-60">
                       <AiOutlineClose className="pt-2 text-[23px] text-white" />
                       <button
-                        className="text-[20px] text-white"
+                        className="text-[20px] text-white mb-1"
                         onClick={() => handleDeleteItem(cartItem)}
                       >
-                        Delete
+                        Sterge
                       </button>
                     </div>
                   </div>
@@ -136,7 +143,10 @@ const Cart = () => {
                   {total} $
                 </span>
               </p>
-              <button className="float-right bck text-white w-[140px] h-[40px] text-[22px] rounded-bl-xl rounded-tr-xl mr-5">
+              <button
+                onClick={goToCheckout}
+                className="float-right bck text-white w-[140px] h-[40px] text-[22px] rounded-bl-xl rounded-tr-xl mr-5 hover:text-white hover:bg-black transition-colors duration-300"
+              >
                 Continua
               </button>
             </div>

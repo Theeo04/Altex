@@ -27,7 +27,7 @@ function Produs({ numeProdus, pret, image, rating, noRatings }) {
   const trucateTitle = truncateText(numeProdus, 8);
 
   return (
-    <div className="w-[220px] h-[390px] border flex-col items-center pl-4 pr-4 pt-4 border-xl rounded transform transition-transform hover:scale-105">
+    <div className=" w-[220px] h-[390px] border flex-col items-center pl-4 pr-4 pt-4 border-xl transform transition-transform hover:scale-105">
       <div className="flex justify-center">
         <img className="w-[160px] h-[170px] " src={image} alt="imagineProdus" />
       </div>
@@ -54,7 +54,9 @@ function Produs({ numeProdus, pret, image, rating, noRatings }) {
         ))}
         <p className="pl-3 text-[13px] font-[500]">({noRatings})</p>
       </div>
-      <p className="text-[22px] font-[500] text-red-600 pb-3">{pret} lei</p>
+      <p className="text-[22px] font-[500] text-red-600 pb-3 text-left">
+        {pret} lei
+      </p>
       <div className="w-[190px] h-[30px] flex items-center justify-center bck rounded-bl-xl rounded-tr-xl darker">
         <button
           className="text-white w-[180px] h-[29px]"

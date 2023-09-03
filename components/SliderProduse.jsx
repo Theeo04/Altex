@@ -1,51 +1,78 @@
-// pages/index.js
 import React, { useState } from "react";
+import CategorySliderProduces from "./CategorySliderProduces";
 
 const Home = () => {
-  const [selectedDivId, setSelectedDivId] = useState(null);
+  const [selectedDivId, setSelectedDivId] = useState("div1");
 
-  const buttons = [
-    { id: "div1", label: "Button 1" },
-    { id: "div2", label: "Button 2" },
-    { id: "div3", label: "Button 3" },
+  const contentData = [
+    {
+      id: "div1",
+      label: "Laptopuri",
+      content: (
+        <CategorySliderProduces
+          link={"https://fakestoreapi.com/products?category=electronics"}
+        />
+      ),
+    },
+    {
+      id: "div2",
+      label: "Tablete",
+      content: (
+        <CategorySliderProduces
+          link={"https://fakestoreapi.com/products/category/jewelery"}
+        />
+      ),
+    },
+    {
+      id: "div3",
+      label: "Ghiozdane si genti pentru copii",
+      content: (
+        <CategorySliderProduces
+          link={"https://fakestoreapi.com/products?category=kids"}
+        />
+      ),
+    },
+    {
+      id: "div4",
+      label: "Birouri",
+      content: (
+        <CategorySliderProduces
+          link={"https://fakestoreapi.com/products/category/jewelery"}
+        />
+      ),
+    },
   ];
 
-  const divs = [
-    { id: "div1", content: "Div 1 content" },
-    { id: "div2", content: "Div 2 content" },
-    { id: "div3", content: "Div 3 content" },
-  ];
-
-  const handleClick = (divId) => {
-    setSelectedDivId(divId);
+  const handleClick = (div) => {
+    setSelectedDivId(div);
   };
 
   return (
-    <div>
-      <h1 className="text-2xl font-semibold mb-4">Show/Hide Divs in Next.js</h1>
-      <div className="flex justify-center space-x-4">
-        {buttons.map((button) => (
+    <div className="bg-gray-100 mt-10 ">
+      {/* <h1 className="text-2xl font-semibold mb-4 sm:mb-0"></h1> */}
+      <div className="flex space-x-4 pl-[180px] pt-5 sm:ml-0 font-[500] text-[17px] ">
+        {contentData.map((item) => (
           <button
-            key={button.id}
-            className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none ${
-              selectedDivId === button.id ? "bg-blue-700" : ""
+            key={item.id}
+            className={`px-4 py-2  text-black rounded   ${
+              selectedDivId === item.id ? "focus:text-red-600" : ""
             }`}
-            onClick={() => handleClick(button.id)}
+            onClick={() => handleClick(item.id)}
           >
-            {button.label}
+            {item.label}
           </button>
         ))}
       </div>
       <div className="text-center mt-8">
-        {divs.map((div) => (
+        {contentData.map((item) => (
           <div
-            key={div.id}
-            id={div.id}
+            key={item.id}
+            id={item.id}
             className={`${
-              selectedDivId === div.id ? "block" : "hidden"
-            } mt-4 p-4 border rounded border-gray-300`}
+              selectedDivId === item.id ? "block" : "hidden"
+            } mt-4 p-4 rounded border-gray-300`}
           >
-            {div.content}
+            {item.content}
           </div>
         ))}
       </div>
