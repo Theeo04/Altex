@@ -8,6 +8,7 @@ const Cart = () => {
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
   const [transpTax, setTranspTax] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const router = useRouter();
 
@@ -32,10 +33,10 @@ const Cart = () => {
     }
   };
 
-  const currentDate = new Date();
-  const futureDate = new Date(currentDate);
-  futureDate.setDate(currentDate.getDate() + 2);
-  console.log(futureDate);
+  // const currentDate = new Date();
+  // const futureDate = new Date(currentDate);
+  // futureDate.setDate(currentDate.getDate() + 2);
+  // console.log(futureDate);
 
   useEffect(() => {
     const cartItemString = localStorage.getItem("cart");
@@ -63,6 +64,20 @@ const Cart = () => {
     router.push("/checkout");
   };
 
+  const decreaseQuantity = (itemIndex) => {
+    if (cartItems[itemIndex].quantity > 1) {
+      const updatedCartItems = [...cartItems];
+      updatedCartItems[itemIndex].quantity -= 1;
+      setCartItems(updatedCartItems);
+    }
+  };
+
+  const increaseQuantity = (itemIndex) => {
+    const updatedCartItems = [...cartItems];
+    updatedCartItems[itemIndex].quantity += 1;
+    setCartItems(updatedCartItems);
+  };
+
   return (
     <div className="mb-10">
       <Top />
@@ -88,11 +103,26 @@ const Cart = () => {
                       {cartItem.name}
                     </h3>
                     <p className="mt-2 lg:xl:text-[20px]">
-                      Pret: ${cartItem.price.toFixed(2)} (pe unitate)
+                      Pret: ${cartItem.price.toFixed(2)} (per produs)
                     </p>
-                    <p className="mt-2 lg:xl:text-[20px]">
-                      Cantitate: {cartItem.quantity} (Units)
-                    </p>
+                    <div className="flex">
+                      <p className="mt-2 lg:xl text-[20px]">
+                        Cantitate:
+                        <button
+                          className="ml-1 mr-1 text-[25px] text-red-700 font-[700]"
+                          onClick={() => increaseQuantity(index)}
+                        >
+                          +
+                        </button>
+                        {cartItem.quantity}
+                        <button
+                          className="ml-1 mr-1 text-[25px] text-red-700 font-[700]"
+                          onClick={() => decreaseQuantity(index)}
+                        >
+                          -
+                        </button>
+                      </p>
+                    </div>
                     <p className="mt-2 lg:xl:text-[20px]">
                       Total: ${(cartItem.price * cartItem.quantity).toFixed(2)}
                     </p>
@@ -121,7 +151,7 @@ const Cart = () => {
               <p className="pl-[50px] pt-5 text-[18px]">
                 Subtotal:
                 <span className="text-red-700 pl-[140px] text-[18px]">
-                  {subtotal} $
+                  {subtotal.toFixed(2)} $
                 </span>
               </p>
               <p className="pl-[50px] pt-5 text-[20px]">
@@ -140,7 +170,7 @@ const Cart = () => {
               <p className="pl-[50px] pt-5 text-[28px]">
                 Total:
                 <span className="text-red-700 pl-[170px] text-[28px]">
-                  {total} $
+                  {total.toFixed(2)} $
                 </span>
               </p>
               <button

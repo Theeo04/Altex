@@ -65,9 +65,13 @@ function CartPopup() {
   };
 
   return (
-    <div className="">
+    <div >
       {cartItems.length === 0 ? (
-        <p>Your Cart is empty</p>
+        <div className="flex justify-center w-[300px] h-[60px] bg-white border z-10 rounded-lg">
+          <p className="text-black mt-3 font-[500] text-[18px] ">
+            Cosul de cumparaturi este gol
+          </p>
+        </div>
       ) : (
         <ul className="mt-2 ml-3">
           {cartItems.map((cartItem, index) => (
