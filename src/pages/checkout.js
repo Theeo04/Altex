@@ -71,8 +71,8 @@ const Checkout = () => {
       <Top />
       {/* Conditionally render the PopUp */}
       {showPopUp && (
-        <div className="popup-container">
-          <PopUpConfirm />
+        <div className="popup">
+          <PopUpConfirm className="" />
         </div>
       )}
       {!user ? (
