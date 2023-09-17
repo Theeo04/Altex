@@ -46,7 +46,6 @@ const Checkout = () => {
     }
 
     try {
-      // Assuming you have defined 'db' somewhere in your component
       const docRef = await addDoc(collection(db, "orders"), {
         produse: cartItems,
         name,
